@@ -1,0 +1,65 @@
+@model IEnumerable<ToDoApp.Models.Todo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>TODO List</h1>
+
+<p>
+    <a asp-action="Add">Add Item</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        //If task is completed. Highlight in green.
+        //If the tasks due date is less than 2 days away. Highlight in orange. 
+        //If the task is past the current date. Highlight in red.
+        //Else don't highlight the task
+        var colour = item.IsCompleted == true ? "green" : item.DueOn < DateTime.Now ? "red" : ((item.DueOn - DateTime.Now) < TimeSpan.FromDays(2)) ? "orange" : "white";
+
+        <tr style="background-color:@colour">
+            <td>
+                @Html.DisplayFor(modelItem => item.Item)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

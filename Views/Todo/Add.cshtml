@@ -1,0 +1,39 @@
+@model ToDoApp.ViewModels.AddTodoItemRequest
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add Item</h1>
+
+<h4>Todo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Item" class="control-label"></label>
+                <input asp-for="Item" class="form-control" />
+                <span asp-validation-for="Item" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueOn" class="control-label"></label>
+                <input asp-for="DueOn" class="form-control" />
+                <span asp-validation-for="DueOn" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Todo" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
